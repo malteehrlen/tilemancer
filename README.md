@@ -4,7 +4,7 @@ Script for GIMP that adds a sprite sheet generation feature to `Filter/Animation
 Tilemancer sets the grid size for you when generating, just make sure that the grid is enabled if you want to use that.
 
 ## Installation
-* Put it in your script folder. you can find the script folder by going to `Edit/Preferences/Folders/Scripts` in GIMP.
+* Put `tilemancer.scm` in your script folder. you can find the script folder by going to `Edit/Preferences/Folders/Scripts` in GIMP.
 * Click on `Filters/Script-Fu/'Refresh Scrips'`
 
 ## Example
