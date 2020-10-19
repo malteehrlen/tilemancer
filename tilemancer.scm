@@ -15,7 +15,8 @@
   (let ((side (ceiling (sqrt (vector-length item-vect)))))
     (do ((i 0 (+ i 1)))
       ((= i side))
-      (do ((j 0 (+ j 1))) ((= j side)) 
+      (do ((j 0 (+ j 1))) 
+        ((= j side)) 
         (let ((frame (- (vector-length item-vect) 1 (+ j (* i side)))))
           (if (>= frame 0) (gimp-layer-translate (vector-ref item-vect frame) (* j (car framesize)) (* i (cdr framesize)))))))))
 

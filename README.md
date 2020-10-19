@@ -7,6 +7,14 @@ Tilemancer sets the grid size for you when generating, just make sure that the g
 * Put it in your script folder. you can find the script folder by going to `Edit/Preferences/Folders/Scripts` in GIMP.
 * Click on `Filters/Script-Fu/'Refresh Scrips'`
 
+## Example
+With the animation frames as layers, its easy to edit and preview using GIMPs `Filter/Animation/Playback` 
+
+[Animated gif](./example.gif)
+
+When the animation looks good, use `tilemancer` to convert it to a sprite sheet
+[finished sprite sheet](./example_sheet.png)
+
 ## Why
 Well, I found some free python scripts floating around the internet for this purpose, but python seems to work poorly/not at all with the newest versions of GIMP. So I took this as an opportunity to learn more about GIMP scripting, and Scheme.
 
