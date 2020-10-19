@@ -7,4 +7,7 @@ Tilemancer sets the grid size for you when generating, just make sure that the g
 * Put it in your script folder. you can find the script folder by going to `Edit/Preferences/Folders/Scripts` in GIMP.
 * Click on `Filters/Script-Fu/'Refresh Scrips'`
 
+## Why
+Well, I found some free python scripts floating around the internet for this purpose, but python seems to work poorly/not at all with the newest versions of GIMP. So I took this as an opportunity to learn more about GIMP scripting, and Scheme.
+
 If this GIMP script was helpful for you, consider a small [PayPal donation](https://www.paypal.com/donate/?hosted_button_id=EJ6PDT5HB8Q4C). 
