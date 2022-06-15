@@ -1,5 +1,7 @@
 (define (tilemancer image drawable option)
-  (let* ((width (car (gimp-image-width image)))
+  (let* (
+    (image (car (gimp-image-duplicate image)))     
+    (width (car (gimp-image-width image)))
     (height (car (gimp-image-height image)))
     (layers (gimp-image-get-layers image))
     (num-layers (car layers))
@@ -10,6 +12,7 @@
       (gimp-image-resize-to-layers image)
       (gimp-image-merge-visible-layers image 1)
       (gimp-image-grid-set-spacing image width height)
+      (gimp-display-new image)
       (gimp-displays-flush))))
 
 (define (sheeterize-square image item-vect framesize)
