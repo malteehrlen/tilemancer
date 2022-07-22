@@ -21,16 +21,16 @@
       (do ((j 0 (+ j 1))) ((= j side)) ; for j = 0; j < side; j++ 
         (let ((frame (- (vector-length item-vect) 1 (+ j (* i side)))))
           (if 
-			(>= frame 0) 
-			(gimp-layer-translate ; Copy input tile layer somewhere to output tileset
-				(vector-ref item-vect frame)
-				(* j (+ spacing (car framesize))) ; (framesize.x + spacing) * j
-				(* i (+ spacing (cdr framesize))) ; (framesize.y + spacing) * i
-			)
-		  )
-		)
-	  )
-	)
+            (>= frame 0) 
+            (gimp-layer-translate ; Copy input tile layer somewhere to output tileset
+                (vector-ref item-vect frame)
+                (* j (+ spacing (car framesize))) ; (framesize.x + spacing) * j
+                (* i (+ spacing (cdr framesize))) ; (framesize.y + spacing) * i
+            )
+          )
+        )
+      )
+    )
   )
 )
 
@@ -55,8 +55,8 @@
     "October 19, 2020"
     "*"
     SF-IMAGE      "Image"          0
-    SF-DRAWABLE      "Drawable"          0
-    SF-OPTION      "Shape" '("Square" "One row per layer group")
-	SF-VALUE       "Tile spacing amount (px)" "0"
+    SF-DRAWABLE   "Drawable"       0
+    SF-OPTION     "Shape" '("Square" "One row per layer group")
+    SF-VALUE      "Tile spacing amount (px)" "0"
 )
 (script-fu-menu-register "tilemancer" "<Image>/Filters/Animation")
