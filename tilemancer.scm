@@ -1,4 +1,4 @@
-(define (tilemancer image drawable option)
+(define (tilemancer image drawable option spacing)
   (let* (
     (image (car (gimp-image-duplicate image)))     
     (width (car (gimp-image-width image)))
@@ -6,7 +6,7 @@
     (layers (gimp-image-get-layers image))
     (num-layers (car layers))
     (layer-vect (cadr layers)))
-    (cond ((= option 0) (sheeterize-square image layer-vect (cons width height)))
+    (cond ((= option 0) (sheeterize-square image layer-vect (cons width height) spacing))
       ((= option 1) (sheeterize-group image layer-vect (cons width height) 0)))
     (begin
       (gimp-image-resize-to-layers image)
@@ -15,14 +15,24 @@
       (gimp-display-new image)
       (gimp-displays-flush))))
 
-(define (sheeterize-square image item-vect framesize)
+(define (sheeterize-square image item-vect framesize spacing)
   (let ((side (ceiling (sqrt (vector-length item-vect)))))
-    (do ((i 0 (+ i 1)))
-      ((= i side))
-      (do ((j 0 (+ j 1))) 
-        ((= j side)) 
+    (do ((i 0 (+ i 1))) ((= i side)) ; for i = 0; i < side; i++
+      (do ((j 0 (+ j 1))) ((= j side)) ; for j = 0; j < side; j++ 
         (let ((frame (- (vector-length item-vect) 1 (+ j (* i side)))))
-          (if (>= frame 0) (gimp-layer-translate (vector-ref item-vect frame) (* j (car framesize)) (* i (cdr framesize)))))))))
+          (if 
+			(>= frame 0) 
+			(gimp-layer-translate ; Copy input tile layer somewhere to output tileset
+				(vector-ref item-vect frame)
+				(* j (+ spacing (car framesize))) ; (framesize.x + spacing) * j
+				(* i (+ spacing (cdr framesize))) ; (framesize.y + spacing) * i
+			)
+		  )
+		)
+	  )
+	)
+  )
+)
 
 (define (sheeterize-group image item-vect framesize row)
   (let* ((width (car (gimp-image-width image)))
@@ -47,5 +57,6 @@
     SF-IMAGE      "Image"          0
     SF-DRAWABLE      "Drawable"          0
     SF-OPTION      "Shape" '("Square" "One row per layer group")
+	SF-VALUE       "Tile spacing amount (px)" "0"
 )
 (script-fu-menu-register "tilemancer" "<Image>/Filters/Animation")
