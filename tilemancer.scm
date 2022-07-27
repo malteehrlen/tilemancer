@@ -7,7 +7,7 @@
     (num-layers (car layers))
     (layer-vect (cadr layers)))
     (cond ((= option 0) (sheeterize-square image layer-vect (cons width height) spacing))
-      ((= option 1) (sheeterize-group image layer-vect (cons width height) 0)))
+      ((= option 1) (sheeterize-group image layer-vect (cons width height) 0 spacing)))
     (begin
       (gimp-image-resize-to-layers image)
       (gimp-image-merge-visible-layers image 1)
