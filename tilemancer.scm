@@ -34,17 +34,19 @@
   )
 )
 
-(define (sheeterize-group image item-vect framesize row)
+(define (sheeterize-group image item-vect framesize row spacing)
   (let* ((width (car (gimp-image-width image)))
     (height (car (gimp-image-height image)))
     (cols (vector-length item-vect))) 
-    (do ((i 0 (+ i 1))) 
-      ((= i cols)) 
+    (do ((i 0 (+ i 1))) ((= i cols)) 
       (let* ((current-item (vector-ref item-vect i))
-        (xpos (* (- cols 1 i) (car framesize))))
-        (if (= 0 (car (gimp-item-is-group current-item)))
-          (gimp-layer-translate current-item xpos (* (- row 1) (cdr framesize)))
-          (sheeterize-group image (cadr (gimp-item-get-children current-item)) framesize (+ 1 row)))))))
+        (xpos (* (- cols 1 i) (+ spacing (car framesize)))))
+        (if 
+            (= 0 (car (gimp-item-is-group current-item)))
+            ; if this particular item is not group, print it on current row
+            (gimp-layer-translate current-item xpos (* row (+ spacing (cdr framesize))))
+            ; if it is group, recurse and use current item index as row index
+            (sheeterize-group image (cadr (gimp-item-get-children current-item)) framesize i spacing))))))
 
 (script-fu-register
     "tilemancer"
