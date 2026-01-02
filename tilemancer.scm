@@ -1,11 +1,12 @@
+#!/usr/bin/env gimp-script-fu-interpreter-3.0
 (define (tilemancer image drawable option spacing)
   (let* (
     (image (car (gimp-image-duplicate image)))     
-    (width (car (gimp-image-width image)))
-    (height (car (gimp-image-height image)))
-    (layers (gimp-image-get-layers image))
-    (num-layers (car layers))
-    (layer-vect (cadr layers)))
+    (width (car (gimp-image-get-width image)))
+    (height (car (gimp-image-get-height image)))
+    (layers (car (gimp-image-get-layers image)))
+    (num-layers (vector-length layers))
+    (layer-vect layers))
     (cond ((= option 0) (sheeterize-square image layer-vect (cons width height) spacing))
       ((= option 1) (sheeterize-group image layer-vect (cons width height) 0 spacing)))
     (begin
@@ -22,7 +23,7 @@
         (let ((frame (- (vector-length item-vect) 1 (+ j (* i side)))))
           (if 
             (>= frame 0) 
-            (gimp-layer-translate ; Copy input tile layer somewhere to output tileset
+            (gimp-item-transform-translate ; Copy input tile layer somewhere to output tileset
                 (vector-ref item-vect frame)
                 (* j (+ spacing (car framesize))) ; (framesize.x + spacing) * j
                 (* i (+ spacing (cdr framesize))) ; (framesize.y + spacing) * i
@@ -35,8 +36,8 @@
 )
 
 (define (sheeterize-group image item-vect framesize row spacing)
-  (let* ((width (car (gimp-image-width image)))
-    (height (car (gimp-image-height image)))
+  (let* ((width (car (gimp-image-get-width image)))
+    (height (car (gimp-image-get-height image)))
     (cols (vector-length item-vect))) 
     (do ((i 0 (+ i 1))) ((= i cols)) 
       (let* ((current-item (vector-ref item-vect i))
@@ -44,21 +45,20 @@
         (if 
             (= 0 (car (gimp-item-is-group current-item)))
             ; if this particular item is not group, print it on current row
-            (gimp-layer-translate current-item xpos (* row (+ spacing (cdr framesize))))
+            (gimp-item-transform-translate current-item xpos (* row (+ spacing (cdr framesize))))
             ; if it is group, recurse and use current item index as row index
             (sheeterize-group image (cadr (gimp-item-get-children current-item)) framesize i spacing))))))
 
-(script-fu-register
+(script-fu-register-filter
     "tilemancer"
-    "tilemancer"
+    "Tilemancer"
     "Generate sprite sheets from layers"
     "Malte Ehrlen"
     "copyright 2020, Malte Ehrlen, malte@ehrlen.com;"
     "October 19, 2020"
     "*"
-    SF-IMAGE      "Image"          0
-    SF-DRAWABLE   "Drawable"       0
+    SF-ONE-DRAWABLE
     SF-OPTION     "Shape" '("Square" "One row per layer group")
-    SF-VALUE      "Tile spacing amount (px)" "0"
+    SF-ADJUSTMENT  "Tile spacing amount (px)"     '(0 0 1000 1 10 0 0)
 )
-(script-fu-menu-register "tilemancer" "<Image>/Filters/Animation")
+(script-fu-menu-register "tilemancer" "<Image>/Plug-in")

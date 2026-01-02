@@ -1,9 +1,13 @@
 # tilemancer
-Script for GIMP that adds a sprite sheet generation feature to `Filter/Animations/tilemancer`. If you use layer groups to organize different animations of the same sprite, you can generate one row per layer group. Alternatively, use a square shape to optimize file size.
+Script for GIMP that adds a sprite sheet generation feature to `Plug-in/Tilemancer`. If you use layer groups to organize different animations of the same sprite, you can generate one row per layer group. Alternatively, use a square shape to optimize file size.
 
 Tilemancer sets the grid size for you when generating, just make sure that the grid is enabled if you want to use that.
 
-## Installation
+## Installation (GIMP 3.0.0 and higher)
+* Put `tilemancer.scm` in your script folder. you can find the script folder by going to `Edit/Preferences/Folders/Scripts` in GIMP.
+
+## Installation (GIMP 2 and older versions)
+* Download tilemancer.scm from the [1.3.0 release](https://github.com/malteehrlen/tilemancer/releases/tag/v1.3.0)
 * Put `tilemancer.scm` in your script folder. you can find the script folder by going to `Edit/Preferences/Folders/Scripts` in GIMP.
 * Click on `Filters/Script-Fu/'Refresh Scrips'`
 
@@ -12,7 +16,7 @@ With the animation frames as layers, its easy to edit and preview using GIMPs `F
 
 ![Animated gif](https://github.com/malteehrlen/tilemancer/blob/master/example.gif)
 
-When the animation looks good, use `tilemancer` to convert it to a sprite sheet
+When the animation looks good, use the menu option `Plug-in/Tilemancer` to convert it to a sprite sheet
 ![finished sprite sheet](https://github.com/malteehrlen/tilemancer/blob/master/example_sheet.png)
 
 ## Why
