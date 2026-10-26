@@ -47,7 +47,7 @@
             ; if this particular item is not group, print it on current row
             (gimp-item-transform-translate current-item xpos (* row (+ spacing (cdr framesize))))
             ; if it is group, recurse and use current item index as row index
-            (sheeterize-group image (cadr (gimp-item-get-children current-item)) framesize i spacing))))))
+            (sheeterize-group image (car (gimp-item-get-children current-item)) framesize i spacing))))))
 
 (script-fu-register-filter
     "tilemancer"
